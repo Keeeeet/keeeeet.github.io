@@ -9,18 +9,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050505;
       --surface: rgba(18, 20, 28, 0.65);
       --border: rgba(255, 255, 255, 0.08);
       --text: #a1a5b5;
       --text-strong: #ffffff;
       --hover: rgba(255, 255, 255, 0.05);
       --accent: #4f8ef7;
-      --copper: #d9774b;
     }
 
     body {
-      background: var(--bg);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
@@ -28,64 +25,48 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
+      margin: 0;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    .bg-animation {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(-45deg, #050505, #0a1120, #050505, #170d08);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      z-index: -2;
+    }
+
+    .bg-grid {
+      position: fixed;
+      width: 200vw;
+      height: 200vh;
+      top: -50vh;
+      left: -50vw;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 15s linear infinite;
+      z-index: -1;
       pointer-events: none;
     }
 
-    .glow-copper {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: var(--copper);
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
-      top: -10%;
-      left: -10%;
-      animation: floatCopper 12s ease-in-out infinite alternate;
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .glow-blue {
-      position: absolute;
-      width: 450px;
-      height: 450px;
-      background: var(--accent);
-      border-radius: 50%;
-      filter: blur(140px);
-      opacity: 0.12;
-      bottom: -20%;
-      right: -10%;
-      animation: floatBlue 15s ease-in-out infinite alternate;
-    }
-
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: 1;
-      opacity: 0.5;
-    }
-
-    @keyframes floatCopper {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(15%, 15%) scale(1.1); }
-    }
-
-    @keyframes floatBlue {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-10%, -15%) scale(1.15); }
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(40px, 40px); }
     }
 
     .card {
@@ -233,11 +214,8 @@
   </style>
 </head>
 <body>
-  <div class="bg-animation">
-    <div class="glow-copper"></div>
-    <div class="glow-blue"></div>
-    <div class="grid-overlay"></div>
-  </div>
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
 
   <div class="card">
     <div class="header">
